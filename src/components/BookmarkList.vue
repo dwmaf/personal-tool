@@ -9,7 +9,8 @@ import {
   Trash2, 
   Search,
   ExternalLink,
-  AlertTriangle
+  AlertTriangle,
+  LogOut
 } from 'lucide-vue-next';
 
 const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL || '';
@@ -35,8 +36,23 @@ const deleteModalOpen = ref(false);
 const bookmarkToDelete = ref<Bookmark | null>(null);
 const isDeleting = ref(false);
 
-const fetchBookmarks = async () => {
+const fetchBookmarks = async (force = false) => {
   if (!supabase) return;
+  
+  // Try to load from cache first if not explicitly forcing a refresh
+  if (!force) {
+    const cached = sessionStorage.getItem('bookmarks_cache');
+    if (cached) {
+      try {
+        bookmarks.value = JSON.parse(cached);
+        isLoading.value = false;
+        return; // Early return, we don't hit Supabase!
+      } catch (e) {
+        sessionStorage.removeItem('bookmarks_cache'); // Invalid cache
+      }
+    }
+  }
+
   isLoading.value = true;
   const { data, error } = await supabase
     .from('bookmarks')
@@ -45,14 +61,35 @@ const fetchBookmarks = async () => {
     
   if (data) {
     bookmarks.value = data;
+    sessionStorage.setItem('bookmarks_cache', JSON.stringify(data));
   }
   isLoading.value = false;
 };
 
-onMounted(() => {
+onMounted(async () => {
+  if (supabase) {
+    const { data } = await supabase.auth.getSession();
+    if (!data.session) {
+      window.location.href = '/login';
+      return;
+    }
+  } else {
+    window.location.href = '/login';
+    return;
+  }
+  
   fetchBookmarks();
-  window.addEventListener('bookmarks-updated', fetchBookmarks);
+  window.addEventListener('bookmarks-updated', () => {
+    sessionStorage.removeItem('bookmarks_cache');
+    fetchBookmarks(true);
+  });
 });
+
+const handleLogout = async () => {
+  if (supabase) await supabase.auth.signOut();
+  localStorage.removeItem('sb-access-token');
+  window.location.href = '/login';
+};
 
 const copyUrl = async (id: number, url: string) => {
   try {
@@ -89,6 +126,7 @@ const confirmDelete = async () => {
   
   if (!error) {
     bookmarks.value = bookmarks.value.filter(b => b.id !== bookmarkToDelete.value?.id);
+    sessionStorage.setItem('bookmarks_cache', JSON.stringify(bookmarks.value));
     closeDeleteModal();
   } else {
     alert("Failed to delete bookmark: " + error.message);
@@ -112,9 +150,9 @@ const formatDate = (dateStr: string) => {
         <p class="text-sm text-gray-500 mt-1">Manage and view your extracted links.</p>
       </div>
       
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
         <button 
-          @click="fetchBookmarks" 
+          @click="fetchBookmarks(true)" 
           class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-xl hover:bg-gray-50 hover:border-blue-200 transition-colors shadow-sm"
         >
           <Search class="w-4 h-4" /> Refresh
@@ -125,7 +163,15 @@ const formatDate = (dateStr: string) => {
           class="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-xl hover:bg-gray-800 transition-colors shadow-sm shadow-gray-900/10"
         >
           <component :is="isTitleHidden ? Eye : EyeOff" class="w-4 h-4" /> 
-          {{ isTitleHidden ? 'Show Titles' : 'Hide Titles' }}
+          {{ isTitleHidden ? 'Show Titles' : 'Hide' }}
+        </button>
+
+        <button 
+          type="button" 
+          @click="handleLogout" 
+          class="flex items-center gap-1.5 px-3 py-2 bg-white border border-red-100 text-red-600 text-sm font-medium rounded-xl hover:bg-red-50 transition-colors shadow-sm"
+        >
+          <LogOut class="w-4 h-4" /> Logout
         </button>
       </div>
     </div>
@@ -144,9 +190,9 @@ const formatDate = (dateStr: string) => {
       <p class="text-gray-500 text-sm mt-1 max-w-sm">You haven't uploaded any bookmarks yet, or the ones you uploaded didn't map correctly.</p>
     </div>
 
-    <!-- Table -->
-    <div v-else class="overflow-x-auto">
-      <table class="w-full text-left text-sm whitespace-nowrap">
+    <!-- Desktop Table -->
+    <div v-else class="w-full">
+      <table class="w-full text-left text-sm whitespace-nowrap hidden md:table">
         <thead class="bg-gray-50/50 text-gray-600 font-medium">
           <tr>
             <th class="px-6 py-4">Title</th>
@@ -156,7 +202,7 @@ const formatDate = (dateStr: string) => {
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100/60">
-          <tr v-for="b in bookmarks" :key="b.id" class="hover:bg-blue-50/30 transition-colors group">
+          <tr v-for="b in bookmarks" :key="'desktop-'+b.id" class="hover:bg-blue-50/30 transition-colors group">
             <td class="px-6 py-4">
               <div class="flex items-center gap-3">
                 <div v-if="b.icon" class="flex-shrink-0 w-6 h-6 rounded bg-gray-100 flex items-center justify-center overflow-hidden">
@@ -207,6 +253,55 @@ const formatDate = (dateStr: string) => {
           </tr>
         </tbody>
       </table>
+
+      <!-- Mobile Card List -->
+      <div class="md:hidden flex flex-col divide-y divide-gray-100">
+        <div v-for="b in bookmarks" :key="'mobile-'+b.id" class="p-5 hover:bg-blue-50/20 transition-colors flex flex-col gap-3">
+          <div class="flex items-start gap-4 overflow-hidden">
+            <div v-if="b.icon" class="flex-shrink-0 w-10 h-10 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center overflow-hidden">
+              <img :src="b.icon" alt="" class="w-6 h-6 object-contain" />
+            </div>
+            <div v-else class="flex-shrink-0 w-10 h-10 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-400">
+              <ExternalLink class="w-5 h-5" />
+            </div>
+            
+            <div class="flex-1 min-w-0">
+              <span v-if="isTitleHidden" class="bg-gray-200 text-transparent select-none rounded animate-pulse block truncate w-32 mt-0.5">
+                ************************
+              </span>
+              <span v-else class="font-semibold text-gray-900 text-[15px] truncate block leading-snug" :title="b.title">
+                {{ b.title }}
+              </span>
+              <a :href="b.url" target="_blank" class="text-blue-500 hover:text-blue-700 text-[13px] truncate block mt-0.5" :title="b.url">
+                {{ b.url }}
+              </a>
+            </div>
+          </div>
+          
+          <div class="flex flex-row items-center justify-between mt-2 pt-3 border-t border-gray-100/80">
+            <span class="text-xs font-medium text-gray-400 bg-gray-50 px-2.5 py-1 rounded-md">{{ formatDate(b.add_date) }}</span>
+            <div class="flex items-center gap-2">
+              <button 
+                @click="copyUrl(b.id, b.url)"
+                class="flex items-center justify-center px-3 py-1.5 h-8 rounded-lg border transition-colors focus:ring-2 focus:ring-blue-100 text-xs font-medium gap-1.5"
+                :class="copiedId === b.id ? 'bg-green-50 border-green-200 text-green-700' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-gray-900'"
+              >
+                <Check v-if="copiedId === b.id" class="w-3.5 h-3.5" />
+                <Copy v-else class="w-3.5 h-3.5" />
+                {{ copiedId === b.id ? 'Copied' : 'Copy' }}
+              </button>
+              
+              <button 
+                @click="openDeleteModal(b)"
+                class="flex items-center justify-center w-8 h-8 rounded-lg bg-white border border-red-100 text-red-500 hover:bg-red-50 focus:ring-2 focus:ring-red-100 transition-colors"
+                title="Delete Bookmark"
+              >
+                <Trash2 class="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

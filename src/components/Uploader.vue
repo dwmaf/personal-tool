@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { createClient } from '@supabase/supabase-js';
-import { UploadCloud, CheckCircle2, XCircle, Info, LogOut, Loader2 } from 'lucide-vue-next';
+import { UploadCloud, CheckCircle2, XCircle, Info, LogOut, Loader2, Upload } from 'lucide-vue-next';
 
 const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL || '';
 const supabaseKey = import.meta.env.PUBLIC_SUPABASE_KEY || '';
@@ -98,6 +98,7 @@ const handleUpload = async () => {
     uploadStatus.value = 'Successfully saved to Supabase!';
     uploadIsError.value = false;
     file.value = null;
+    sessionStorage.removeItem('bookmarks_cache');
     
     // Redirect to list page after brief delay
     setTimeout(() => {
@@ -151,7 +152,7 @@ const handleUpload = async () => {
         <button type="submit" :disabled="uploadLoading || !file" class="relative overflow-hidden w-full px-5 py-3.5 bg-gray-900 text-white font-semibold rounded-xl hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-200 transition-all duration-300 shadow-lg shadow-gray-900/20 disabled:opacity-70 disabled:cursor-not-allowed group">
           <span class="relative z-10 flex items-center justify-center gap-2">
             <span>{{ uploadLoading ? 'Processing...' : 'Extract & Save' }}</span>
-            <UploadCloud v-if="!uploadLoading" class="w-5 h-5 transition-transform group-hover:translate-x-1 -rotate-90" />
+            <Upload v-if="!uploadLoading" class="w-5 h-5 transition-transform" />
             <Loader2 v-else class="w-5 h-5 animate-spin" />
           </span>
         </button>
