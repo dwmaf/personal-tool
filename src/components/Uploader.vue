@@ -49,8 +49,8 @@ const handleFileChange = (e: Event) => {
 };
 
 const handleUpload = async () => {
-  if (!file.value) {
-    uploadStatus.value = 'Please select a file first.';
+  if (!file.value || !supabase) {
+    uploadStatus.value = 'File missing or Supabase not configured.';
     uploadIsError.value = true;
     return;
   }
@@ -76,7 +76,7 @@ const handleUpload = async () => {
         };
       }
       return null;
-    }).filter(Boolean);
+    }).filter((b): b is { title: string, url: string, addDate: string, icon: string } => b !== null);
 
     if (bookmarks.length === 0) {
       throw new Error("No web bookmarks found in the file.");
@@ -84,21 +84,18 @@ const handleUpload = async () => {
 
     uploadStatus.value = `Found ${bookmarks.length} bookmarks. Uploading to Supabase...`;
 
-    const token = localStorage.getItem('sb-access-token') || session.value?.access_token;
-    
-    const response = await fetch('/api/bookmarks', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
-      },
-      body: JSON.stringify({ bookmarks })
-    });
+    const { error: insertError } = await supabase.from('bookmarks').insert(
+      bookmarks.map(b => ({
+        title: b.title,
+        url: b.url,
+        add_date: b.addDate ? new Date(parseInt(b.addDate) * 1000).toISOString() : new Date().toISOString(),
+        icon: b.icon
+      }))
+    );
 
-    const result = await response.json();
-    if (!response.ok) throw new Error(result.error || 'Upload failed');
+    if (insertError) throw new Error(insertError.message);
     
-    uploadStatus.value = result.message || 'Successfully saved to Supabase!';
+    uploadStatus.value = 'Successfully saved to Supabase!';
     uploadIsError.value = false;
     file.value = null;
     
