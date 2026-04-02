@@ -102,7 +102,7 @@ const handleUpload = async () => {
     
     // Redirect to list page after brief delay
     setTimeout(() => {
-      window.location.href = '/';
+      window.location.href = '/bookmarks';
     }, 1500);
   } catch (err: any) {
     uploadStatus.value = err.message || 'An error occurred during extraction.';

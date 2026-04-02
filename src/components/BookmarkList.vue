@@ -166,13 +166,6 @@ const formatDate = (dateStr: string) => {
           {{ isTitleHidden ? 'Show Titles' : 'Hide' }}
         </button>
 
-        <button 
-          type="button" 
-          @click="handleLogout" 
-          class="flex items-center gap-1.5 px-3 py-2 bg-white border border-red-100 text-red-600 text-sm font-medium rounded-xl hover:bg-red-50 transition-colors shadow-sm"
-        >
-          <LogOut class="w-4 h-4" /> Logout
-        </button>
       </div>
     </div>
 

@@ -1,0 +1,35 @@
+---
+import "../../styles/global.css";
+import Layout from '../../layouts/Layout.astro';
+import CodeViewer from '../../components/CodeViewer.vue';
+import background from '../../assets/background.svg';
+import { createClient } from '@supabase/supabase-js';
+
+const { id } = Astro.params;
+
+const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL || '';
+const supabaseKey = import.meta.env.PUBLIC_SUPABASE_KEY || '';
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// Fetch the snippet server-side (optional, but faster for SEO/Preview)
+const { data: snippet, error } = await supabase
+  .from('snippets')
+  .select('*')
+  .eq('id', id)
+  .single();
+
+// If snippet not found, we could redirect or show 404
+if (error || !snippet) {
+    return Astro.redirect('/404');
+}
+---
+
+<Layout title={snippet.title}>
+	<div id="container" class="min-h-screen relative overflow-hidden font-sans">
+		<img id="background" src={background.src} alt="" fetchpriority="high" class="absolute top-0 left-0 w-full h-full -z-10 object-cover opacity-60 pointer-events-none" style="filter: blur(100px);" />
+		
+		<main class="w-full min-h-screen flex flex-col items-center py-16 px-6 sm:px-12">
+			<CodeViewer snippet={snippet} client:load />
+		</main>
+	</div>
+</Layout>

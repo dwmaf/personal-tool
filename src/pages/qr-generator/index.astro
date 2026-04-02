@@ -1,0 +1,27 @@
+---
+import "../../styles/global.css";
+import Layout from '../../layouts/Layout.astro';
+import QRCodeGenerator from '../../components/QRCodeGenerator.vue';
+import background from '../../assets/background.svg';
+---
+
+<Layout title="QR Generator">
+	<div id="container" class="min-h-screen relative overflow-hidden font-sans">
+		<img id="background" src={background.src} alt="" fetchpriority="high" class="absolute top-0 left-0 w-full h-full -z-10 object-cover opacity-60 pointer-events-none" style="filter: blur(100px);" />
+		
+		<main class="w-full min-h-screen flex flex-col items-center py-16 px-6 sm:px-12">
+			<header class="mb-12 flex flex-col items-center text-center">
+				<h1 class="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 tracking-tight">
+					QR Wave
+				</h1>
+				<div class="mt-6 flex gap-4">
+					<a href="/" class="px-5 py-2.5 bg-white border border-gray-200 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors shadow-sm">
+						&larr; Back to Tools
+					</a>
+				</div>
+			</header>
+			
+			<QRCodeGenerator client:only="vue" />
+		</main>
+	</div>
+</Layout>
