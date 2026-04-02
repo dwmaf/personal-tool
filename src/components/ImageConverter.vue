@@ -164,7 +164,8 @@ const handleConvert = async () => {
             <CheckCircle2 class="w-10 h-10" stroke-width="1.5" />
         </div>
         
-        <h3 class="text-2xl font-bold text-gray-900 mb-2">Conversion Complete!</h3>
+        <h3 class="text-2xl font-bold text-gray-900 mb-1">Conversion Complete!</h3>
+        <p class="text-xs font-mono text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full mb-3">{{ resultFilename }}</p>
         <p class="text-gray-500 text-sm mb-6 text-center max-w-xs">Your image has been optimized into next-gen AVIF format.</p>
         
         <div class="w-full bg-gray-50 border border-gray-100 rounded-2xl p-5 mb-8">
