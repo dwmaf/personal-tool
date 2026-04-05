@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Bookmark, Image as ImageIcon, Zap, Share2, Key, QrCode, ScanLine } from 'lucide-vue-next';
+import { Bookmark, Image as ImageIcon, Zap, Share2, Key, QrCode, ScanLine, Gamepad2 } from 'lucide-vue-next';
 
 const tools = [
   {
@@ -64,6 +64,15 @@ const tools = [
     color: 'bg-violet-50 text-violet-600',
     borderColor: 'group-hover:border-violet-400',
     hoverBg: 'hover:bg-violet-50/50'
+  },
+  {
+    name: 'Game Solver',
+    description: 'Advanced solver for Block Blast. Calculate optimal moves instantly.',
+    href: '/block-blast-solver',
+    icon: Gamepad2,
+    color: 'bg-rose-50 text-rose-600',
+    borderColor: 'group-hover:border-rose-400',
+    hoverBg: 'hover:bg-rose-50/50'
   }
 ];
 </script>
