@@ -78,7 +78,7 @@ onMounted(() => {
       <div class="absolute -top-24 -right-24 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-40 pointer-events-none"></div>
 
       <div class="mb-10 text-center relative z-10">
-        <div class="inline-flex items-center justify-center w-16 h-16 rounded-[24px] bg-blue-50 text-blue-600 mb-6 shadow-inner">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-blue-50 text-blue-600 mb-6 shadow-inner">
           <Key class="w-8 h-8" stroke-width="1.5" />
         </div>
         <h2 class="text-3xl font-black text-gray-900 tracking-tight mb-2">Shield Pass</h2>
@@ -87,10 +87,10 @@ onMounted(() => {
 
       <!-- Result Display -->
       <div class="relative mb-8 group">
-        <div class="absolute -inset-1 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-3xl blur opacity-10 group-hover:opacity-20 transition-opacity"></div>
+        <div class="absolute -inset-1 bg-linear-to-r from-blue-400 to-indigo-400 rounded-3xl blur opacity-10 group-hover:opacity-20 transition-opacity"></div>
         <div class="relative bg-gray-50/50 border border-gray-200 rounded-3xl p-6 flex flex-col items-center gap-4 shadow-inner">
             <div 
-                class="w-full text-center font-mono text-2xl md:text-3xl break-all min-h-[40px] px-4 selection:bg-blue-100"
+                class="w-full text-center font-mono text-2xl md:text-3xl break-all min-h-10 px-4 selection:bg-blue-100"
                 :class="password.includes('Please select') ? 'text-gray-300 text-sm mt-2' : 'text-gray-900'"
             >
                 {{ password }}

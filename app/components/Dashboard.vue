@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Bookmark, Image as ImageIcon, Zap, Share2, Key, QrCode, ScanLine, Gamepad2 } from 'lucide-vue-next';
+import { Bookmark, Image as ImageIcon, Zap, Share2, Key, QrCode, ScanLine, Gamepad2, Crop } from 'lucide-vue-next';
 
 const tools = [
   {
@@ -21,13 +21,13 @@ const tools = [
     hoverBg: 'hover:bg-emerald-50/50'
   },
   {
-    name: 'Base64 Converter',
-    description: 'Convert text or files to Base64 strings and vice-versa instantly.',
-    href: '/base64-converter',
-    icon: Zap,
-    color: 'bg-purple-50 text-purple-600',
-    borderColor: 'group-hover:border-purple-400',
-    hoverBg: 'hover:bg-purple-50/50'
+    name: 'Image Resizer',
+    description: 'Resize client-side then convert to AVIF.',
+    href: '/image-resizer',
+    icon: Crop,
+    color: 'bg-indigo-50 text-indigo-600',
+    borderColor: 'group-hover:border-indigo-400',
+    hoverBg: 'hover:bg-indigo-50/50'
   },
   {
     name: 'Code Sharer',
@@ -65,15 +65,6 @@ const tools = [
     borderColor: 'group-hover:border-violet-400',
     hoverBg: 'hover:bg-violet-50/50'
   },
-  {
-    name: 'Game Solver',
-    description: 'Advanced solver for Block Blast. Calculate optimal moves instantly.',
-    href: '/block-blast-solver',
-    icon: Gamepad2,
-    color: 'bg-rose-50 text-rose-600',
-    borderColor: 'group-hover:border-rose-400',
-    hoverBg: 'hover:bg-rose-50/50'
-  }
 ];
 </script>
 
