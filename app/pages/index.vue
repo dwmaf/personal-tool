@@ -26,7 +26,7 @@
 
     <!-- Footer -->
     <footer class="w-full py-6 mt-auto text-center z-10">
-      <p class="text-[13px] font-medium text-gray-400 flex items-center justify-center gap-1.5 backdrop-blur-sm mx-auto max-w-fit px-4 py-1.5 rounded-full bg-white/30 border border-white/50">
+      <p class="text-[13px] font-medium text-gray-400 flex items-center justify-center gap-1.5 mx-auto max-w-fit px-4 py-1.5 rounded-full bg-white/30 border border-white/50">
         Crafted with <span class="text-red-500 animate-pulse">❤️</span> by <span class="font-bold text-gray-700">Dawam</span>
       </p>
     </footer>

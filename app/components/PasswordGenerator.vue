@@ -72,7 +72,7 @@ onMounted(() => {
 
 <template>
   <div class="w-full max-w-xl mx-auto mt-6" v-cloak>
-    <div class="bg-white/70 backdrop-blur-xl rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-white/50 p-10 relative overflow-hidden">
+    <div class="bg-white/70 rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-white/50 p-10 relative overflow-hidden">
       
       <!-- Ambient Glow -->
       <div class="absolute -top-24 -right-24 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-40 pointer-events-none"></div>

@@ -119,7 +119,7 @@ const handleConvert = async () => {
 <template>
   <div class="w-full max-w-xl mx-auto mt-6" v-cloak>
     <div
-      class="bg-white/70 backdrop-blur-xl rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 p-8 pt-10 relative overflow-hidden">
+      class="bg-white/70 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 p-8 pt-10 relative overflow-hidden">
 
       <!-- Decorative Element -->
       <div
@@ -160,7 +160,7 @@ const handleConvert = async () => {
 
               <!-- Overlay Detail -->
               <div
-                class="absolute bottom-4 left-4 right-4 bg-gray-900/80 backdrop-blur-md text-white px-4 py-2.5 rounded-xl shadow-lg flex items-center justify-between text-sm mx-auto max-w-[90%]">
+                class="absolute bottom-4 left-4 right-4 bg-gray-900/80 text-white px-4 py-2.5 rounded-xl shadow-lg flex items-center justify-between text-sm mx-auto max-w-[90%]">
                 <div class="flex items-center gap-2 overflow-hidden">
                   <FileImage class="w-4 h-4 shrink-0 text-emerald-400" />
                   <span class="truncate font-medium">{{ file?.name }}</span>

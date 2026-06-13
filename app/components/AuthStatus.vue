@@ -34,7 +34,7 @@ onMounted(() => {
 
 <template>
   <div class="fixed top-6 right-6 sm:right-12 z-[100]" v-cloak>
-    <div v-if="isLoading" class="w-24 h-10 bg-white/20 backdrop-blur-md rounded-xl animate-pulse"></div>
+    <div v-if="isLoading" class="w-24 h-10 bg-white/20 rounded-xl animate-pulse"></div>
     
     <div v-else class="flex items-center gap-3">
       <!-- Logged In State -->

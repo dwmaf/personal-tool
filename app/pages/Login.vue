@@ -53,7 +53,7 @@ const handleLogin = async () => {
   </div>
 
   <div v-else class="w-full">
-    <div class="bg-white/70 backdrop-blur-xl rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 w-full max-w-md mx-auto p-8 mb-8" v-cloak>
+    <div class="bg-white/70 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 w-full max-w-md mx-auto p-8 mb-8" v-cloak>
       <div class="mb-6 text-center">
         <h2 class="text-2xl font-bold text-gray-900">Sign In Required</h2>
         <p class="text-gray-500 mt-2 text-sm">Please log in to upload bookmarks to your secured database.</p>

@@ -56,7 +56,7 @@ const tools = [
       v-for="tool in tools" 
       :key="tool.name"
       :href="tool.href"
-      class="group bg-white/70 backdrop-blur-xl rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 p-8 transition-all duration-300 hover:-translate-y-1 relative overflow-hidden"
+      class="group bg-white/70 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 p-8 transition-all duration-300 hover:-translate-y-1 relative overflow-hidden"
       :class="[tool.borderColor, tool.hoverBg]"
     >
       <div class="flex flex-col h-full relative z-10">

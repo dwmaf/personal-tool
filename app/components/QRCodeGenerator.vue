@@ -73,7 +73,7 @@ watch([text, color, bgColor, margin, size], () => {
 
 <template>
   <div class="w-full max-w-4xl mx-auto mt-6" v-cloak>
-    <div class="bg-white/70 backdrop-blur-xl rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-white/50 p-8 md:p-12 relative overflow-hidden">
+    <div class="bg-white/70 rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-white/50 p-8 md:p-12 relative overflow-hidden">
       
       <!-- Ambient Background -->
       <div class="absolute -top-24 -left-24 w-64 h-64 bg-emerald-100 rounded-full blur-3xl opacity-40 pointer-events-none"></div>
@@ -142,7 +142,7 @@ watch([text, color, bgColor, margin, size], () => {
              <img v-else :src="qrDataUrl" class="w-full h-full object-contain animate-in fade-in zoom-in duration-300" alt="Generated QR Code" />
 
              <!-- Floating info -->
-             <div v-if="qrDataUrl" class="absolute inset-0 bg-emerald-900/40 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-3">
+             <div v-if="qrDataUrl" class="absolute inset-0 bg-emerald-900/40 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-3">
                 <button @click="downloadQR" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-emerald-600 shadow-lg hover:scale-110 active:scale-95 transition-transform">
                     <Download class="w-5 h-5" />
                 </button>

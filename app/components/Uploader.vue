@@ -119,7 +119,7 @@ const handleUpload = async () => {
   </div>
 
   <div v-else class="w-full">
-    <div class="uploader-container bg-white/70 backdrop-blur-xl rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 w-full max-w-md mx-auto p-8 translate-y-0 hover:-translate-y-1 transition-transform duration-300" v-cloak>
+    <div class="uploader-container bg-white/70 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 w-full max-w-md mx-auto p-8 translate-y-0 hover:-translate-y-1 transition-transform duration-300" v-cloak>
       <div class="mb-8 flex justify-between items-start">
         <div>
           <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-blue-50 text-blue-600 mb-4 shadow-inner">
