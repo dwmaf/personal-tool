@@ -3,15 +3,6 @@ import { Bookmark, Image as ImageIcon, Zap, Share2, Key, QrCode, ScanLine, Gamep
 
 const tools = [
   {
-    name: 'Bookmark Sync',
-    description: 'Extract and back up your Brave bookmarks directly to Supabase.',
-    href: '/bookmarks',
-    icon: Bookmark,
-    color: 'bg-blue-50 text-blue-600',
-    borderColor: 'group-hover:border-blue-400',
-    hoverBg: 'hover:bg-blue-50/50'
-  },
-  {
     name: 'Image Converter',
     description: 'Convert PNG/JPG images to AVIF format blazingly fast in the cloud.',
     href: '/image-converter',
@@ -28,15 +19,6 @@ const tools = [
     color: 'bg-indigo-50 text-indigo-600',
     borderColor: 'group-hover:border-indigo-400',
     hoverBg: 'hover:bg-indigo-50/50'
-  },
-  {
-    name: 'Code Sharer',
-    description: 'Save and share code snippets with your team via unique secure links.',
-    href: '/code-sharer',
-    icon: Share2,
-    color: 'bg-orange-50 text-orange-600',
-    borderColor: 'group-hover:border-orange-400',
-    hoverBg: 'hover:bg-orange-50/50'
   },
   {
     name: 'Password Generator',

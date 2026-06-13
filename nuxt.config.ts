@@ -15,6 +15,9 @@ export default defineNuxtConfig({
     plugins: [
       tailwindcss(),
     ],
+    worker: {
+      format: 'es'
+    },
   },
   app: {
     head: {
